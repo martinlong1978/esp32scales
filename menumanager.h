@@ -14,6 +14,7 @@ class MenuManager {
         void display_loop();
         void setMenu(IMenu *menu);
         void back();
+        int lastbutton = 0;
 };
 
 

@@ -4,6 +4,18 @@
 #include <U8g2lib.h>
 #include "menumanager.h"
 
+
+#define MENU_WIDTH 26
+#define SMALL_FONT u8g2_font_b12_t_japanese1
+#define LARGE_FONT u8g2_font_logisoso24_tf
+#define COMPACT_FONT u8g2_font_finderskeepers_tr
+
+#define BTN_A 1
+#define BTN_B 38
+#define BTN_C 33
+
+
+
 class IMenu
 {
 
@@ -14,6 +26,11 @@ public:
     virtual void buttonPress(int button) = 0;
     void setParentMenu(IMenu *parent);
     virtual String name() = 0;
+    const char ** options();
+protected: 
+    const char *opts[3] = {"NXT","TAR","MEN"};
+
+
 };
 
 class MultiTare : public IMenu
