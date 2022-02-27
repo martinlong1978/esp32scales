@@ -1,11 +1,12 @@
+#include <Arduino.h>
 #include "menu.h"
 #include "menumanager.h"
-#include <Arduino.h>
+#include "multitare.h"
 
 MenuManager::MenuManager(U8G2 *display)
 {
     this->_display = display;
-    this->setMenu(new Main(this));
+    this->setMenu(new MultiTare(this));
     pinMode(BTN_A, INPUT_PULLUP);
     pinMode(BTN_B, INPUT_PULLUP);
     pinMode(BTN_C, INPUT_PULLUP);
