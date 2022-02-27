@@ -43,5 +43,6 @@ void MenuManager::back()
         IMenu *tmp = _currentMenu;
         _currentMenu = _currentMenu->_parent;
         delete tmp;
+        _currentMenu->reactivate();
     }
 }

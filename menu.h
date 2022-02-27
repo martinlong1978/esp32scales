@@ -3,6 +3,7 @@
 
 #include <U8g2lib.h>
 #include "menumanager.h"
+#include <functional>
 
 
 #define MENU_WIDTH 26
@@ -13,7 +14,7 @@
 #define BTN_A 1
 #define BTN_B 38
 #define BTN_C 33
-
+#define SCREEN_HEIGHT 64;
 
 
 class IMenu
@@ -27,11 +28,19 @@ public:
     void setParentMenu(IMenu *parent);
     virtual String name() = 0;
     const char ** options();
+    virtual void reactivate();
 protected: 
-    const char *opts[3] = {"NXT","TAR","MEN"};
+    const char *opts[3];
 
 
 };
+
+struct MenuItem
+{
+    const char * name;
+    std::function<IMenu*()> lamb;
+};
+
 
 class MultiTare : public IMenu
 {
@@ -55,9 +64,12 @@ class Menu : public IMenu
 {
 public:
     Menu(MenuManager *menumanager);
+    ~Menu();
     virtual void renderDisplay(U8G2 *display);
     virtual void buttonPress(int button);
     virtual String name();
+private:
+    MenuItem *items[3];
 };
 
 class PowerOff : public IMenu
