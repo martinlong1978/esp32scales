@@ -31,19 +31,26 @@ void MenuManager::display_loop()
     } while (_display->nextPage());
 }
 
-void MenuManager::setMenu(IMenu *menu)
+void MenuManager::setMenu(IMenu *menu, bool root)
 {
+    if (root)
+    {
+        while (_currentMenu != NULL)
+        {
+            back();
+        }
+    }
     menu->setParentMenu(_currentMenu);
     _currentMenu = menu;
 }
 
 void MenuManager::back()
 {
-    if (_currentMenu->_parent != NULL)
+    IMenu *tmp = _currentMenu;
+    _currentMenu = _currentMenu->_parent;
+    delete tmp;
+    if (_currentMenu != NULL)
     {
-        IMenu *tmp = _currentMenu;
-        _currentMenu = _currentMenu->_parent;
-        delete tmp;
         _currentMenu->reactivate();
     }
 }

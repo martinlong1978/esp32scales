@@ -12,10 +12,9 @@ class MenuManager {
         IMenu *_currentMenu;
         MenuManager(U8G2 *display);
         void display_loop();
-        void setMenu(IMenu *menu);
+        void setMenu(IMenu *menu, bool root = false);
         void back();
         int lastbutton = 0;
 };
-
 
 #endif

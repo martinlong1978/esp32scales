@@ -15,6 +15,7 @@ public:
     virtual String name();
 private:
     MenuItem *items[3];
+    int _currentIndex = 0;
 };
 
 #endif

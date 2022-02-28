@@ -30,6 +30,8 @@ void MainMenu::buttonPress(int button)
 {
     if (button == BTN_C)
         _menuManager->back();
+    if (button == BTN_A)
+        _currentIndex++;
 }
 
 String MainMenu::name()
@@ -44,8 +46,11 @@ void MainMenu::renderDisplay(U8G2 *display)
     // display->drawStr(MENU_WIDTH, 20, "Settings");
     int h = 64 / 4;
 
-    for(int i =0; i < 3; i++){
+    for (int i = 0; i < 3; i++)
+    {
         int pos = (h * (i + 1)) - ((h - 8) / 2);
+        display->setDrawColor(i == _currentIndex ? 0 : 1);
         display->drawStr(MENU_WIDTH, pos, items[i]->name);
     }
+    display->setDrawColor(1);
 }
