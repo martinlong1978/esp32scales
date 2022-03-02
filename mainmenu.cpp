@@ -60,3 +60,4 @@ void MainMenu::renderDisplay(U8G2 *display)
         display->setDrawColor(1);
     }
 }
+

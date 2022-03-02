@@ -27,6 +27,7 @@ public:
     virtual String name() = 0;
     const char **options();
     virtual void reactivate();
+    virtual void processWeight(long weight);
 
 protected:
     const char *opts[3];
