@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ADS1232.h>
 #include "menu.h"
 #include "menumanager.h"
 #include "multitare.h"
@@ -11,6 +12,7 @@ MenuManager::MenuManager(U8G2 *display)
     pinMode(BTN_B, INPUT_PULLUP);
     pinMode(BTN_C, INPUT_PULLUP);
 }
+
 
 void MenuManager::display_loop()
 {

@@ -35,6 +35,6 @@ protected:
 struct MenuItem
 {
     const char *name;
-    std::function<IMenu *()> lamb;
+    std::function<void()> lamb;
 };
 #endif

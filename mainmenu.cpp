@@ -3,6 +3,7 @@
 #include "multitare.h"
 #include "poweroff.h"
 
+
 MainMenu::MainMenu(MenuManager *menumanager)
 {
     _menuManager = menumanager;
@@ -10,17 +11,17 @@ MainMenu::MainMenu(MenuManager *menumanager)
     opts[1] = "SLCT";
     opts[2] = "BACK";
     items[0] = new MenuItem{"Calibrate", [menumanager]()
-                            { return new Calibrate(menumanager); }};
+                            { menumanager->setMenu(new Calibrate(menumanager)); }};
     items[1] = new MenuItem{"Multi-tare", [menumanager]()
-                            { return new MultiTare(menumanager); }};
+                            {  menumanager->setMenu(new MultiTare(menumanager), true); }};
     items[2] = new MenuItem{"Power Off", [menumanager]()
-                            { return new PowerOff(menumanager); }};
+                            {  menumanager->setMenu(new PowerOff(menumanager)); }};
 }
 
 MainMenu::~MainMenu()
 {
     // Delete menu items (any constructed menus are dealt with by the manager)
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < ITEMCOUNT; i++)
     {
         delete items[i];
     }
@@ -31,7 +32,10 @@ void MainMenu::buttonPress(int button)
     if (button == BTN_C)
         _menuManager->back();
     if (button == BTN_A)
-        _currentIndex++;
+        if(++_currentIndex >= ITEMCOUNT)
+            _currentIndex = 0;
+    if(button == BTN_B)
+        items[_currentIndex]->lamb();
 }
 
 String MainMenu::name()
@@ -42,15 +46,17 @@ String MainMenu::name()
 void MainMenu::renderDisplay(U8G2 *display)
 {
     display->setFont(SMALL_FONT);
-    // display->drawStr(MENU_WIDTH, 8, "Calibrate");
-    // display->drawStr(MENU_WIDTH, 20, "Settings");
-    int h = 64 / 4;
+    int h = 64 / (ITEMCOUNT + 1);
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < ITEMCOUNT; i++)
     {
         int pos = (h * (i + 1)) - ((h - 8) / 2);
-        display->setDrawColor(i == _currentIndex ? 0 : 1);
+        if (i == _currentIndex)
+        {
+            display->drawBox(MENU_WIDTH, pos - 9, 127 - MENU_WIDTH, 10);
+            display->setDrawColor(0);
+        }
         display->drawStr(MENU_WIDTH, pos, items[i]->name);
+        display->setDrawColor(1);
     }
-    display->setDrawColor(1);
 }

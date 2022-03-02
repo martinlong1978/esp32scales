@@ -5,6 +5,8 @@
 #include "menu.h"
 #include "menumanager.h"
 
+#define ITEMCOUNT 3
+
 class MainMenu : public IMenu
 {
 public:
@@ -14,7 +16,7 @@ public:
     virtual void buttonPress(int button);
     virtual String name();
 private:
-    MenuItem *items[3];
+    MenuItem *items[ITEMCOUNT];
     int _currentIndex = 0;
 };
 
