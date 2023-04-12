@@ -27,6 +27,11 @@ MainMenu::~MainMenu()
     }
 }
 
+void MainMenu::processWeight(long weight, bool tare)
+{
+    
+}
+
 void MainMenu::buttonPress(int button)
 {
     if (button == BTN_C)

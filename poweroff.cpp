@@ -20,10 +20,14 @@ void PowerOff::buttonPress(int button)
         _menuManager->back();
     if (button == BTN_A)
     {
-        delay(1000);
-        esp_sleep_enable_ext0_wakeup(GPIO_NUM_1, LOW);
-        esp_deep_sleep_start();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        _menuManager->enter_sleep();
     }
+}
+
+void PowerOff::processWeight(long weight, bool tare)
+{
+    
 }
 
 void PowerOff::renderDisplay(U8G2 *display)

@@ -6,6 +6,9 @@ class IMenu;
 #include <U8g2lib.h>
 #include "menu.h"
 
+#define SAMPLES 5
+
+
 class WeightManager
 {
 public:
@@ -24,6 +27,9 @@ private:
     float _factor = 1.0;
     long _offset = 0;
     long _weight = 0;
+    int _samplePointer = 0;
+    long _samples[SAMPLES];
+    bool _tare;
 
 };
 
@@ -34,8 +40,11 @@ public:
     void display_loop();
     void setMenu(IMenu *menu, bool root = false);
     void back();
-    int lastbutton = 0;
+    volatile int lastbutton = 0;
+    volatile bool pressed = false;
+    volatile bool isLongPress = false;
     WeightManager weightManager;
+    void enter_sleep();
 
 private:
     U8G2 *_display;

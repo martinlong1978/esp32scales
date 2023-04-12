@@ -23,11 +23,12 @@ public:
     MenuManager *_menuManager;
     virtual void renderDisplay(U8G2 *display) = 0;
     virtual void buttonPress(int button) = 0;
+    virtual void longButtonPress(int button){};
     void setParentMenu(IMenu *parent);
     virtual String name() = 0;
     const char **options();
     virtual void reactivate();
-    virtual void processWeight(long weight);
+    virtual void processWeight(long weight, bool tare) = 0;
 
 protected:
     const char *opts[3];

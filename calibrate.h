@@ -5,8 +5,6 @@
 #include "menumanager.h"
 #include "queues.h"
 
-#define SAMPLES 5
-
 class Calibrate : public IMenu
 {
 public:
@@ -14,9 +12,10 @@ public:
     virtual void renderDisplay(U8G2 *display);
     virtual void buttonPress(int button);
     virtual String name();
+    virtual void processWeight(long weight, bool tare);
+
 private:
     int _state = 0;
-    void processWeight(long weight);
     int _samplePointer = 0;
     long _samples[SAMPLES];
 };

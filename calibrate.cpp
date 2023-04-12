@@ -22,8 +22,11 @@ void Calibrate::buttonPress(int button)
         switch (_state)
         {
         case 0:
+            _menuManager->weightManager.tare();
+            _state++;
+            break;
         case 2:
-            _samplePointer = 0; 
+            _samplePointer = 0;
             xQueueReset(weightStream);
             _state++;
             break;
@@ -31,25 +34,13 @@ void Calibrate::buttonPress(int button)
     }
 }
 
-void Calibrate::processWeight(long weight)
+void Calibrate::processWeight(long weight, bool tare)
 {
     switch (_state)
     {
     case 1:
-        _samples[_samplePointer++] = weight;
-        if (_samplePointer >= SAMPLES)
-        {
-            _samplePointer = 0;
-            long total = 0;
-            for (int i = 0; i < SAMPLES; i++)
-            {
-                Serial.printf("Value: %d - %d\n", i, _samples[i]);
-                total += _samples[i];
-            }
-            _menuManager->weightManager.set_offset(total / SAMPLES);
+        if (tare)
             _state++;
-        }
-        break;
     case 3:
         _samples[_samplePointer++] = weight;
         if (_samplePointer >= SAMPLES)
@@ -74,7 +65,6 @@ void Calibrate::processWeight(long weight)
 
 void Calibrate::renderDisplay(U8G2 *display)
 {
-    long weight;
     _menuManager->weightManager.checkWeight(this);
     const char *message;
     switch (_state)

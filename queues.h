@@ -3,5 +3,6 @@
 
 
 extern QueueHandle_t weightStream;
+extern portMUX_TYPE timerMux;
 
 #endif

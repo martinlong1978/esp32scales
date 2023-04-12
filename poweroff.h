@@ -11,6 +11,7 @@ public:
     virtual void renderDisplay(U8G2 *display);
     virtual void buttonPress(int button);
     virtual String name();
+    virtual void processWeight(long weight, bool tare);
 };
 
 #endif
